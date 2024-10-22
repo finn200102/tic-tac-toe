@@ -1,7 +1,7 @@
 function createBoard() {
   let board = new Array(9);
   const addMark = (position, mark) => {
-    board[position] = mark;
+    board[position - 1] = mark;
   };
   const checkStatus = () => {
     let winPositions = [
@@ -44,18 +44,33 @@ function createGame() {
     input: process.stdin,
     output: process.stdout,
   });
-  const getInput = (round) => {
+  const getInput = (round, player) => {
     return new Promise((resolve) => {
-      readline.question(`Round ${round + 1}: Enter your input: `, (input) => {
-        console.log(`You entered: ${input}`);
-        resolve(input);
-      });
+      readline.question(
+        `Player: ${player.playerName} Round ${round + 1}: Enter your input: `,
+        (input) => {
+          console.log(`You entered: ${input}`);
+          resolve(input);
+        }
+      );
     });
   };
 
   const runGame = async () => {
+    let lastPlayer = playerOne;
     for (let i = 0; i < 8; i++) {
-      const input = await getInput(i);
+      const input = await getInput(i, lastPlayer);
+      board.addMark(input, lastPlayer.playerMark);
+      console.log(board.board);
+      if (!board.checkStatus()) {
+        console.log("won");
+        break;
+      }
+      if (lastPlayer === playerOne) {
+        lastPlayer = playerTwo;
+      } else {
+        lastPlayer = playerOne;
+      }
     }
     readline.close();
   };
@@ -63,4 +78,4 @@ function createGame() {
 }
 
 const game = createGame();
-game.runGame();
+game.runGame().catch(console.error);
