@@ -21,9 +21,9 @@ function createBoard() {
         board[p[1] - 1] === board[p[2] - 1] &&
         board[p[0] - 1] != null
       ) {
-        return ["won", board[p[0] - 1]];
+        return false; //["won", board[p[0] - 1]];
       } else {
-        return ["running"];
+        return true;
       }
     }
   };
@@ -40,12 +40,27 @@ function createGame() {
   board = createBoard();
   playerOne = createPlayer("p1", "x");
   playerTwo = createPlayer("p2", "o");
-  return { board, playerOne, playerTwo };
+  const readline = require("readline").createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+  const getInput = (round) => {
+    return new Promise((resolve) => {
+      readline.question(`Round ${round + 1}: Enter your input: `, (input) => {
+        console.log(`You entered: ${input}`);
+        resolve(input);
+      });
+    });
+  };
+
+  const runGame = async () => {
+    for (let i = 0; i < 8; i++) {
+      const input = await getInput(i);
+    }
+    readline.close();
+  };
+  return { runGame };
 }
 
 const game = createGame();
-game.board.addMark(0, "3");
-game.board.addMark(1, "a");
-game.board.addMark(2, "3");
-console.log(game.board.board);
-console.log(game.board.checkStatus());
+game.runGame();
