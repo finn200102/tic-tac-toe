@@ -50,8 +50,6 @@ function createPlayer(name, mark) {
 }
 
 function createGame() {
-  playerOne = createPlayer("p1", "x");
-  playerTwo = createPlayer("p2", "o");
   //const readline = require("readline").createInterface({
   //  input: process.stdin,
   //  output: process.stdout,
@@ -70,18 +68,25 @@ function createGame() {
 
   const getInput = (round, player) => {
     return new Promise((resolve) => {
-      const form = document.querySelector("form");
-      form.addEventListener("submit", (e) => {
+      const form = document.getElementById("form-number-submit");
+
+      form.addEventListener("click", (e) => {
         e.preventDefault();
-        const inputValue = document.querySelector("input").value;
+        const inputValue = document.getElementById("form-number-input").value;
+        console.log(inputValue);
         resolve(inputValue);
       });
     });
   };
 
   const runGame = async () => {
-    let lastPlayer = playerOne;
     let i = 0;
+    const names = await displayController.getNames();
+
+    playerOne = createPlayer(names[0], "x");
+    playerTwo = createPlayer(names[1], "o");
+    let lastPlayer = playerOne;
+
     while (board.checkStatus() == true) {
       i++;
       console.log("start");
@@ -132,6 +137,7 @@ const displayController = (function () {
 
     for (let i = 0; i < b.length; i++) {
       let field = b[i];
+
       const gameField = document.createElement("div");
       gameField.classList.add("board-field");
       if (field == undefined) {
@@ -143,17 +149,29 @@ const displayController = (function () {
       gameBoard.appendChild(gameField);
     }
   };
+  const getNames = () => {
+    const popup = document.getElementById("popup");
+    popup.style.display = "flex";
+    return new Promise((resolve) => {
+      const form = document.getElementById("form-name-submit");
+      form.addEventListener("click", (e) => {
+        e.preventDefault();
+        const nameOne = document.getElementById("playername-one").value;
+        const nameTwo = document.getElementById("playername-two").value;
+
+        resolve([nameOne, nameTwo]);
+      });
+    });
+  };
   const displayWinner = (playerName) => {
     const gameStatus = document.getElementById("game-status");
     gameStatus.textContent = `Player: ${playerName} has won`;
   };
-  return { display, displayWinner };
+  return { display, displayWinner, getNames };
 })();
 
 const startButton = document.getElementById("start-button");
 startButton.addEventListener("click", () => {
-  const popup = document.getElementById("popup");
-  popup.style.display = "flex";
   const game = createGame();
   displayController.display(new Array(9));
   game.runGame().catch(console.error);
