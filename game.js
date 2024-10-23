@@ -101,10 +101,18 @@ function createGame() {
   return { runGame };
 }
 
-function displayController() {
-  let b = [1, 2, 3, 4, 5, 6, 7, 8, 8];
+const displayController = (function () {
+  console.log("hi");
+  const clearDisplay = () => {
+    let gameBoard = document.getElementById("game-board");
 
-  const display = () => {
+    while (gameBoard.firstChild) {
+      console.log(gameBoard.firstChild);
+      gameBoard.removeChild(gameBoard.firstChild);
+    }
+  };
+  const display = (b) => {
+    clearDisplay();
     let gameBoard = document.getElementById("game-board");
 
     for (let i = 0; i < b.length; i++) {
@@ -115,8 +123,10 @@ function displayController() {
     }
   };
   return { display };
-}
-const controller = displayController();
-controller.display();
+})();
+console.log("hi");
+displayController.display([1, 2, 3]);
+displayController.display([1, 2, 3, 4]);
+
 //const game = createGame();
 //game.runGame().catch(console.error);
