@@ -1,4 +1,4 @@
-function createBoard() {
+const board = (function () {
   let board = new Array(9);
   const addMark = (position, mark) => {
     if (checkValidMove(position)) {
@@ -39,7 +39,7 @@ function createBoard() {
     return true;
   };
   return { board, addMark, checkStatus };
-}
+})();
 
 function createPlayer(name, mark) {
   let playerName = name;
@@ -48,7 +48,6 @@ function createPlayer(name, mark) {
 }
 
 function createGame() {
-  board = createBoard();
   playerOne = createPlayer("p1", "x");
   playerTwo = createPlayer("p2", "o");
   const readline = require("readline").createInterface({
