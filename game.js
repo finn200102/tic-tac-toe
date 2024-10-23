@@ -174,6 +174,10 @@ const displayController = (function () {
         const nameOne = document.getElementById("playername-one").value;
         const nameTwo = document.getElementById("playername-two").value;
         popup.style.display = "none";
+        const playerOneField = document.getElementById("playername-one-field");
+        playerOneField.textContent = nameOne;
+        const playerTwoField = document.getElementById("playername-two-field");
+        playerTwoField.textContent = nameTwo;
         resolve([nameOne, nameTwo]);
       });
     });
