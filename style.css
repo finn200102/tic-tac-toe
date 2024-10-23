@@ -73,6 +73,8 @@ button {
   grid-column: 2/3;
   grid-row: 4/5;
   place-self: center;
+  display: flex;
+  gap: 10px;
 }
 
 #game-info {

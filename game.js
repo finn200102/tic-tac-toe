@@ -10,6 +10,10 @@ const board = (function () {
       return false;
     }
   };
+  const clearBoard = () => {
+    board.length = 0;
+    board.push(...new Array(9));
+  };
   const checkValidMove = (position) => {
     if (board[position - 1] == undefined) {
       return true;
@@ -49,7 +53,7 @@ const board = (function () {
     }
     return true;
   };
-  return { board, addMark, checkStatus };
+  return { board, addMark, checkStatus, clearBoard };
 })();
 
 function createPlayer(name, mark) {
@@ -63,6 +67,8 @@ function createGame() {
   //  input: process.stdin,
   //  output: process.stdout,
   //});
+  board.clearBoard();
+
   const getInputTerminal = (round, player) => {
     return new Promise((resolve) => {
       readline.question(
@@ -90,6 +96,7 @@ function createGame() {
 
   const runGame = async () => {
     let i = 0;
+
     const names = await displayController.getNames();
 
     playerOne = createPlayer(names[0], "x");
@@ -178,6 +185,7 @@ const displayController = (function () {
         playerOneField.textContent = nameOne;
         const playerTwoField = document.getElementById("playername-two-field");
         playerTwoField.textContent = nameTwo;
+        displayController.display(new Array(9));
         resolve([nameOne, nameTwo]);
       });
     });
@@ -197,5 +205,11 @@ const startButton = document.getElementById("start-button");
 startButton.addEventListener("click", () => {
   const game = createGame();
   displayController.display(new Array(9));
+  game.runGame().catch(console.error);
+});
+
+const newgameButton = document.getElementById("newgame-button");
+newgameButton.addEventListener("click", (e) => {
+  const game = createGame();
   game.runGame().catch(console.error);
 });
