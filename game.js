@@ -1,9 +1,20 @@
 function createBoard() {
   let board = new Array(9);
   const addMark = (position, mark) => {
-    board[position - 1] = mark;
+    if (checkValidMove(position)) {
+      board[position - 1] = mark;
+      return true;
+    } else {
+      return false;
+    }
   };
+  const checkValidMove = (position) => {
+    if (board[position - 1] == undefined) {
+      return true;
+    }
 
+    return false;
+  };
   const checkStatus = () => {
     let winPositions = [
       [1, 2, 3],
@@ -20,7 +31,7 @@ function createBoard() {
       if (
         board[p[0] - 1] === board[p[1] - 1] &&
         board[p[1] - 1] === board[p[2] - 1] &&
-        board[p[0] - 1] != null
+        board[p[0] - 1] != undefined
       ) {
         return ["won", board[p[0] - 1]];
       }
@@ -60,7 +71,11 @@ function createGame() {
     let lastPlayer = playerOne;
     for (let i = 0; i < 8; i++) {
       const input = await getInput(i, lastPlayer);
-      board.addMark(input, lastPlayer.playerMark);
+      if (!board.addMark(input, lastPlayer.playerMark)) {
+        console.log("Not a valid move!");
+        continue;
+      }
+
       console.log(board.board);
       if (board.checkStatus() != true) {
         let status = board.checkStatus();
