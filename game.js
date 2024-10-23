@@ -38,6 +38,15 @@ const board = (function () {
         return ["won", board[p[0] - 1]];
       }
     }
+    let count = 0;
+    for (let i = 0; i < board.length; i++) {
+      if (board[i] == undefined) {
+        count += 1;
+      }
+    }
+    if (count == 0) {
+      return ["finished"];
+    }
     return true;
   };
   return { board, addMark, checkStatus };
@@ -100,16 +109,22 @@ function createGame() {
       displayController.display(board.board);
       if (board.checkStatus() != true) {
         let status = board.checkStatus();
-        let winMark = status[1];
-        let winPlayerName = "";
-        if (winMark == playerOne.playerMark) {
-          winPlayerName = playerOne.playerName;
+        if (status[0] == "won") {
+          let winMark = status[1];
+          let winPlayerName = "";
+          if (winMark == playerOne.playerMark) {
+            winPlayerName = playerOne.playerName;
+          } else {
+            winPlayerName = playerTwo.playerName;
+          }
+          console.log(`${winPlayerName} has won`);
+          displayController.displayWinner(winPlayerName);
+          break;
         } else {
-          winPlayerName = playerTwo.playerName;
+          console.log("It is a draw");
+          displayController.displayDraw();
+          break;
         }
-        console.log(`${winPlayerName} has won`);
-        displayController.displayWinner(winPlayerName);
-        break;
       }
       if (lastPlayer === playerOne) {
         lastPlayer = playerTwo;
@@ -167,7 +182,11 @@ const displayController = (function () {
     const gameStatus = document.getElementById("game-status");
     gameStatus.textContent = `Player: ${playerName} has won`;
   };
-  return { display, displayWinner, getNames };
+  const displayDraw = () => {
+    const gameStatus = document.getElementById("game-status");
+    gameStatus.textContent = "Nobody has won it is a draw";
+  };
+  return { display, displayWinner, getNames, displayDraw };
 })();
 
 const startButton = document.getElementById("start-button");
