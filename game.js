@@ -152,6 +152,8 @@ const displayController = (function () {
 
 const startButton = document.getElementById("start-button");
 startButton.addEventListener("click", () => {
+  const popup = document.getElementById("popup");
+  popup.style.display = "flex";
   const game = createGame();
   displayController.display(new Array(9));
   game.runGame().catch(console.error);

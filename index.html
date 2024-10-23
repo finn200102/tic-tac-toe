@@ -14,10 +14,23 @@
       </header>
       <div class="content">
         <button id="start-button">Start Game</button>
+        <div id="game-info">
+          <h3>Game status:</h3>
+        </div>
         <div id="game-board"></div>
+        <div id="popup">
+          <h3>Put in the playernames</h3>
+          <form id="form-name">
+            <label for="playername-one">First playername</label>
+            <input type="text" name="playername-one" id="playername-one" />
+            <label for="playername-two">Second playername</label>
+            <input type="text" name="playername-two" id="playername-two" />
+            <button type="submit">Ok</button>
+          </form>
+        </div>
         <div id="game-status">Tic Tac Toe</div>
         <div id="controller">
-          <form>
+          <form id="form-number">
             <input type="number" min="1" max="9" , step="1" />
             <button id="submit" type="submit">Ok</button>
           </form>
