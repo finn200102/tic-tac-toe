@@ -21,11 +21,10 @@ function createBoard() {
         board[p[1] - 1] === board[p[2] - 1] &&
         board[p[0] - 1] != null
       ) {
-        return false; //["won", board[p[0] - 1]];
-      } else {
-        return true;
+        return ["won", board[p[0] - 1]];
       }
     }
+    return true;
   };
   return { board, addMark, checkStatus };
 }
@@ -62,8 +61,9 @@ function createGame() {
       const input = await getInput(i, lastPlayer);
       board.addMark(input, lastPlayer.playerMark);
       console.log(board.board);
-      if (!board.checkStatus()) {
-        console.log("won");
+      if (board.checkStatus() != true) {
+        let status = board.checkStatus();
+        console.log(`${status[1]} has won`);
         break;
       }
       if (lastPlayer === playerOne) {
