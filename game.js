@@ -173,7 +173,7 @@ const displayController = (function () {
         e.preventDefault();
         const nameOne = document.getElementById("playername-one").value;
         const nameTwo = document.getElementById("playername-two").value;
-
+        popup.style.display = "none";
         resolve([nameOne, nameTwo]);
       });
     });
