@@ -94,6 +94,25 @@ function createGame() {
     });
   };
 
+  const getInputTouch = () => {
+    return new Promise((resolve) => {
+      const gameBoard = document.getElementById("game-board");
+      const form = document.getElementById("form-number-submit");
+      const children = gameBoard.querySelectorAll("div");
+      for (let i = 0; i < children.length; i++) {
+        children[i].addEventListener("click", () => {
+          resolve(i + 1);
+        });
+      }
+      form.addEventListener("click", (e) => {
+        e.preventDefault();
+        const inputValue = document.getElementById("form-number-input").value;
+        console.log(inputValue);
+        resolve(inputValue);
+      });
+    });
+  };
+
   const runGame = async () => {
     let i = 0;
 
@@ -106,7 +125,7 @@ function createGame() {
     while (board.checkStatus() == true) {
       i++;
       console.log("start");
-      const input = await getInput(i, lastPlayer);
+      const input = await getInputTouch();
       if (!board.addMark(input, lastPlayer.playerMark)) {
         console.log("Not a valid move!");
         continue;
