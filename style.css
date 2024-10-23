@@ -1,9 +1,26 @@
+:root {
+  --header-color: #0d7377;
+  --background-color: #323232;
+  --dark-color: #212121;
+  --bright-color: #14ffec;
+}
+
+html,
+body {
+  height: 100vh;
+  margin: 0;
+  background-color: var(--background-color);
+}
+
 #game-board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   width: 50vh;
   aspect-ratio: 1 / 1;
+  border: 5px solid var(--bright-color);
+  grid-row: 2 / 3;
+  grid-column: 2/3;
 }
 
 .board-field {
@@ -15,6 +32,75 @@
   font-size: 100px;
 }
 
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 7fr;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 0.1fr, 1fr, 0.1fr, 0.2fr;
+  padding-top: 20px;
+  gap: 10px;
+}
+
+#start-button {
+  grid-column: 2 / 3;
+  border: none;
+  border-radius: 10px;
+  border: 3px solid var(--bright-color);
+  height: 40px;
+  font-size: 25px;
+  background-color: beige;
+}
+
+#game-status {
+  grid-column: 2/3;
+  grid-row: 3/4;
+  text-align: center;
+  color: white;
+  font-size: 30px;
+}
+
+#controller {
+  grid-column: 2/3;
+  grid-row: 4/5;
+  place-self: center;
+}
+
+#controller > form > button {
+  border: none;
+  border-radius: 10px;
+  border: 3px solid var(--bright-color);
+  height: 50px;
+  padding: 13px;
+  font-size: 20px;
+  background-color: beige;
+}
+
+header {
+  background-color: var(--header-color);
+  text-align: center;
+  align-content: center;
+  font-size: 30px;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
 input {
   width: 200px;
+  border: none;
+  border-radius: 5px;
+  border: 3px solid var(--bright-color);
+  height: 25px;
+  padding: 10px;
+  font-size: 20px;
+  background-color: beige;
 }
