@@ -132,7 +132,13 @@ const displayController = (function () {
     for (let i = 0; i < b.length; i++) {
       let field = b[i];
       const gameField = document.createElement("div");
-      gameField.textContent = `${field}`;
+      gameField.classList.add("board-field");
+      if (field == undefined) {
+        gameField.textContent = "";
+      } else {
+        gameField.textContent = `${field}`;
+      }
+
       gameBoard.appendChild(gameField);
     }
   };

@@ -2,6 +2,17 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
+  width: 50vh;
+  aspect-ratio: 1 / 1;
+}
+
+.board-field {
+  background-color: beige;
+  border: 1px solid black;
+  display: flex;
+  display: grid;
+  place-items: center;
+  font-size: 100px;
 }
 
 input {
