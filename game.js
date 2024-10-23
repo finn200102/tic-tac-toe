@@ -101,5 +101,22 @@ function createGame() {
   return { runGame };
 }
 
-const game = createGame();
-game.runGame().catch(console.error);
+function displayController() {
+  let b = [1, 2, 3, 4, 5, 6, 7, 8, 8];
+
+  const display = () => {
+    let gameBoard = document.getElementById("game-board");
+
+    for (let i = 0; i < b.length; i++) {
+      let field = b[i];
+      const gameField = document.createElement("div");
+      gameField.textContent = `${field}`;
+      gameBoard.appendChild(gameField);
+    }
+  };
+  return { display };
+}
+const controller = displayController();
+controller.display();
+//const game = createGame();
+//game.runGame().catch(console.error);
