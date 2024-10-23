@@ -3,6 +3,7 @@ function createBoard() {
   const addMark = (position, mark) => {
     board[position - 1] = mark;
   };
+
   const checkStatus = () => {
     let winPositions = [
       [1, 2, 3],
@@ -63,7 +64,14 @@ function createGame() {
       console.log(board.board);
       if (board.checkStatus() != true) {
         let status = board.checkStatus();
-        console.log(`${status[1]} has won`);
+        let winMark = status[1];
+        let winPlayerName = "";
+        if (winMark == playerOne.playerMark) {
+          winPlayerName = playerOne.playerName;
+        } else {
+          winPlayerName = playerTwo.playerName;
+        }
+        console.log(`${winPlayerName} has won`);
         break;
       }
       if (lastPlayer === playerOne) {
