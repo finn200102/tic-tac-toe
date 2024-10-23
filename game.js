@@ -58,7 +58,7 @@ function createGame() {
   const getInput = (round, player) => {
     return new Promise((resolve) => {
       readline.question(
-        `Player: ${player.playerName} Round ${round + 1}: Enter your input: `,
+        `Player: ${player.playerName} Round ${round}: Enter your input: `,
         (input) => {
           console.log(`You entered: ${input}`);
           resolve(input);
@@ -69,7 +69,9 @@ function createGame() {
 
   const runGame = async () => {
     let lastPlayer = playerOne;
-    for (let i = 0; i < 8; i++) {
+    let i = 0;
+    while (board.checkStatus() == true) {
+      i++;
       const input = await getInput(i, lastPlayer);
       if (!board.addMark(input, lastPlayer.playerMark)) {
         console.log("Not a valid move!");
