@@ -103,6 +103,7 @@ function createGame() {
           winPlayerName = playerTwo.playerName;
         }
         console.log(`${winPlayerName} has won`);
+        displayController.displayWinner(winPlayerName);
         break;
       }
       if (lastPlayer === playerOne) {
@@ -142,7 +143,11 @@ const displayController = (function () {
       gameBoard.appendChild(gameField);
     }
   };
-  return { display };
+  const displayWinner = (playerName) => {
+    const gameStatus = document.getElementById("game-status");
+    gameStatus.textContent = `Player: ${playerName} has won`;
+  };
+  return { display, displayWinner };
 })();
 
 const game = createGame();
