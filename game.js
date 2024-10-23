@@ -150,5 +150,9 @@ const displayController = (function () {
   return { display, displayWinner };
 })();
 
-const game = createGame();
-game.runGame().catch(console.error);
+const startButton = document.getElementById("start-button");
+startButton.addEventListener("click", () => {
+  const game = createGame();
+  displayController.display(new Array(9));
+  game.runGame().catch(console.error);
+});
