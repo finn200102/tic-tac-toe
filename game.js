@@ -1,3 +1,5 @@
+//const { resolve } = require("path");
+
 const board = (function () {
   let board = new Array(9);
   const addMark = (position, mark) => {
@@ -50,11 +52,11 @@ function createPlayer(name, mark) {
 function createGame() {
   playerOne = createPlayer("p1", "x");
   playerTwo = createPlayer("p2", "o");
-  const readline = require("readline").createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
-  const getInput = (round, player) => {
+  //const readline = require("readline").createInterface({
+  //  input: process.stdin,
+  //  output: process.stdout,
+  //});
+  const getInputTerminal = (round, player) => {
     return new Promise((resolve) => {
       readline.question(
         `Player: ${player.playerName} Round ${round}: Enter your input: `,
@@ -66,18 +68,31 @@ function createGame() {
     });
   };
 
+  const getInput = (round, player) => {
+    return new Promise((resolve) => {
+      const form = document.querySelector("form");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const inputValue = document.querySelector("input").value;
+        resolve(inputValue);
+      });
+    });
+  };
+
   const runGame = async () => {
     let lastPlayer = playerOne;
     let i = 0;
     while (board.checkStatus() == true) {
       i++;
+      console.log("start");
       const input = await getInput(i, lastPlayer);
       if (!board.addMark(input, lastPlayer.playerMark)) {
         console.log("Not a valid move!");
         continue;
       }
 
-      console.log(board.board);
+      //console.log(board.board);
+      displayController.display(board.board);
       if (board.checkStatus() != true) {
         let status = board.checkStatus();
         let winMark = status[1];
@@ -96,13 +111,12 @@ function createGame() {
         lastPlayer = playerOne;
       }
     }
-    readline.close();
+    //readline.close();
   };
   return { runGame };
 }
 
 const displayController = (function () {
-  console.log("hi");
   const clearDisplay = () => {
     let gameBoard = document.getElementById("game-board");
 
@@ -124,9 +138,6 @@ const displayController = (function () {
   };
   return { display };
 })();
-console.log("hi");
-displayController.display([1, 2, 3]);
-displayController.display([1, 2, 3, 4]);
 
-//const game = createGame();
-//game.runGame().catch(console.error);
+const game = createGame();
+game.runGame().catch(console.error);
